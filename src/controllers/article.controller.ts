@@ -1,13 +1,15 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { prisma } from "../config/prisma"
 import { count } from "console";
+import { verify } from "jsonwebtoken"
+
 
 export const listDataArticle = async (req: Request, res: Response) => {
     try {
         const article = await prisma.article.findMany({
             include: {
                 ArticleCategory: {
-                    select:{
+                    select: {
                         category_name: true
                     }
                 },
@@ -55,7 +57,7 @@ export const detailArticle = async (req: Request, res: Response) => {
             message: "Article di dapatkan",
             data: selectArticle
         })
-        
+
     } catch (error) {
         console.log(error);
         res.status(500).send({
@@ -65,17 +67,24 @@ export const detailArticle = async (req: Request, res: Response) => {
     }
 }
 
-export const addArticle = async (req: Request, res: Response) => {
+export const addArticle = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { title, content, thumbnail, articleCategoryId, } = req.body;
+        console.log(req.header("Authorization"));
+
+        const token = req.header("Authorization")?.split(" ")[1];
+        if (!token) {
+            throw {
+                rc: 404, message: "Token is not Exist"
+            }
+        }
+
+        const checkToken: any = verify(token, process.env.TOKEN_KEY || "secret;")
+
         console.log("DEBUG req.body:", req.body);
 
         const newArticle = await prisma.article.create({
             data: {
-                title,
-                content,
-                thumbnail,
-                articleCategoryId: parseInt(articleCategoryId),
+                ...req.body, accountId: checkToken.id
             }
         })
         console.log("hasil dari article", newArticle);
@@ -87,11 +96,7 @@ export const addArticle = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
-        console.log(error);
-        res.status(500).send({
-            success: false,
-            message: "Gagal membuat Article"
-        });
+        next(error)
     }
 }
 
@@ -111,8 +116,8 @@ export const updateArticle = async (req: Request, res: Response) => {
             },
             include: {
                 ArticleCategory: {
-                    
-                    select:{
+
+                    select: {
                         category_name: true,
                     }
                 }
@@ -139,7 +144,7 @@ export const deleteArticle = async (req: Request, res: Response) => {
     try {
         await prisma.article.delete({
             where: {
-                id: parseInt (req.params.id)
+                id: parseInt(req.params.id)
             },
         })
 

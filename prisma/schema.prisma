@@ -21,11 +21,12 @@ enum Role {
 }
 
 model Account {
-  id        Int    @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
+  articles  Article[]
   user_name String
-  email     String
+  email     String    @unique
   password  String
-  role      Role   @default(USER)
+  role      Role      @default(USER)
 }
 
 model Article {
@@ -33,6 +34,9 @@ model Article {
   title             String
   content           String
   thumbnail         String
+  createAt          DateTime        @default(now())
+  Account           Account         @relation(fields: [accountId], references: [id])
+  accountId         Int
   articleCategoryId Int
   ArticleCategory   ArticleCategory @relation(fields: [articleCategoryId], references: [id])
 }

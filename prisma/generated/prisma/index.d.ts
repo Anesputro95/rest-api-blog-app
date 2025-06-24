@@ -1064,6 +1064,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type AccountCountOutputType
+   */
+
+  export type AccountCountOutputType = {
+    articles: number
+  }
+
+  export type AccountCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    articles?: boolean | AccountCountOutputTypeCountArticlesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountCountOutputType
+     */
+    select?: AccountCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountArticlesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ArticleWhereInput
+  }
+
+
+  /**
    * Count Type ArticleCategoryCountOutputType
    */
 
@@ -1296,6 +1327,8 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     role?: boolean
+    articles?: boolean | Account$articlesArgs<ExtArgs>
+    _count?: boolean | AccountCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["account"]>
 
   export type AccountSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1323,10 +1356,18 @@ export namespace Prisma {
   }
 
   export type AccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_name" | "email" | "password" | "role", ExtArgs["result"]["account"]>
+  export type AccountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    articles?: boolean | Account$articlesArgs<ExtArgs>
+    _count?: boolean | AccountCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AccountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AccountIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $AccountPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Account"
-    objects: {}
+    objects: {
+      articles: Prisma.$ArticlePayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       user_name: string
@@ -1727,6 +1768,7 @@ export namespace Prisma {
    */
   export interface Prisma__AccountClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    articles<T extends Account$articlesArgs<ExtArgs> = {}>(args?: Subset<T, Account$articlesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1778,6 +1820,10 @@ export namespace Prisma {
      */
     omit?: AccountOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    /**
      * Filter, which Account to fetch.
      */
     where: AccountWhereUniqueInput
@@ -1796,6 +1842,10 @@ export namespace Prisma {
      */
     omit?: AccountOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    /**
      * Filter, which Account to fetch.
      */
     where: AccountWhereUniqueInput
@@ -1813,6 +1863,10 @@ export namespace Prisma {
      * Omit specific fields from the Account
      */
     omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
     /**
      * Filter, which Account to fetch.
      */
@@ -1862,6 +1916,10 @@ export namespace Prisma {
      */
     omit?: AccountOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    /**
      * Filter, which Account to fetch.
      */
     where?: AccountWhereInput
@@ -1910,6 +1968,10 @@ export namespace Prisma {
      */
     omit?: AccountOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    /**
      * Filter, which Accounts to fetch.
      */
     where?: AccountWhereInput
@@ -1952,6 +2014,10 @@ export namespace Prisma {
      * Omit specific fields from the Account
      */
     omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
     /**
      * The data needed to create a Account.
      */
@@ -2000,6 +2066,10 @@ export namespace Prisma {
      * Omit specific fields from the Account
      */
     omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
     /**
      * The data needed to update a Account.
      */
@@ -2067,6 +2137,10 @@ export namespace Prisma {
      */
     omit?: AccountOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    /**
      * The filter to search for the Account to update in case it exists.
      */
     where: AccountWhereUniqueInput
@@ -2093,6 +2167,10 @@ export namespace Prisma {
      */
     omit?: AccountOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    /**
      * Filter which Account to delete.
      */
     where: AccountWhereUniqueInput
@@ -2113,6 +2191,30 @@ export namespace Prisma {
   }
 
   /**
+   * Account.articles
+   */
+  export type Account$articlesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Article
+     */
+    select?: ArticleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Article
+     */
+    omit?: ArticleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArticleInclude<ExtArgs> | null
+    where?: ArticleWhereInput
+    orderBy?: ArticleOrderByWithRelationInput | ArticleOrderByWithRelationInput[]
+    cursor?: ArticleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ArticleScalarFieldEnum | ArticleScalarFieldEnum[]
+  }
+
+  /**
    * Account without action
    */
   export type AccountDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2124,6 +2226,10 @@ export namespace Prisma {
      * Omit specific fields from the Account
      */
     omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
   }
 
 
@@ -2141,11 +2247,13 @@ export namespace Prisma {
 
   export type ArticleAvgAggregateOutputType = {
     id: number | null
+    accountId: number | null
     articleCategoryId: number | null
   }
 
   export type ArticleSumAggregateOutputType = {
     id: number | null
+    accountId: number | null
     articleCategoryId: number | null
   }
 
@@ -2154,6 +2262,8 @@ export namespace Prisma {
     title: string | null
     content: string | null
     thumbnail: string | null
+    createAt: Date | null
+    accountId: number | null
     articleCategoryId: number | null
   }
 
@@ -2162,6 +2272,8 @@ export namespace Prisma {
     title: string | null
     content: string | null
     thumbnail: string | null
+    createAt: Date | null
+    accountId: number | null
     articleCategoryId: number | null
   }
 
@@ -2170,6 +2282,8 @@ export namespace Prisma {
     title: number
     content: number
     thumbnail: number
+    createAt: number
+    accountId: number
     articleCategoryId: number
     _all: number
   }
@@ -2177,11 +2291,13 @@ export namespace Prisma {
 
   export type ArticleAvgAggregateInputType = {
     id?: true
+    accountId?: true
     articleCategoryId?: true
   }
 
   export type ArticleSumAggregateInputType = {
     id?: true
+    accountId?: true
     articleCategoryId?: true
   }
 
@@ -2190,6 +2306,8 @@ export namespace Prisma {
     title?: true
     content?: true
     thumbnail?: true
+    createAt?: true
+    accountId?: true
     articleCategoryId?: true
   }
 
@@ -2198,6 +2316,8 @@ export namespace Prisma {
     title?: true
     content?: true
     thumbnail?: true
+    createAt?: true
+    accountId?: true
     articleCategoryId?: true
   }
 
@@ -2206,6 +2326,8 @@ export namespace Prisma {
     title?: true
     content?: true
     thumbnail?: true
+    createAt?: true
+    accountId?: true
     articleCategoryId?: true
     _all?: true
   }
@@ -2301,6 +2423,8 @@ export namespace Prisma {
     title: string
     content: string
     thumbnail: string
+    createAt: Date
+    accountId: number
     articleCategoryId: number
     _count: ArticleCountAggregateOutputType | null
     _avg: ArticleAvgAggregateOutputType | null
@@ -2328,7 +2452,10 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     thumbnail?: boolean
+    createAt?: boolean
+    accountId?: boolean
     articleCategoryId?: boolean
+    Account?: boolean | AccountDefaultArgs<ExtArgs>
     ArticleCategory?: boolean | ArticleCategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["article"]>
 
@@ -2337,7 +2464,10 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     thumbnail?: boolean
+    createAt?: boolean
+    accountId?: boolean
     articleCategoryId?: boolean
+    Account?: boolean | AccountDefaultArgs<ExtArgs>
     ArticleCategory?: boolean | ArticleCategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["article"]>
 
@@ -2346,7 +2476,10 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     thumbnail?: boolean
+    createAt?: boolean
+    accountId?: boolean
     articleCategoryId?: boolean
+    Account?: boolean | AccountDefaultArgs<ExtArgs>
     ArticleCategory?: boolean | ArticleCategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["article"]>
 
@@ -2355,23 +2488,29 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     thumbnail?: boolean
+    createAt?: boolean
+    accountId?: boolean
     articleCategoryId?: boolean
   }
 
-  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "thumbnail" | "articleCategoryId", ExtArgs["result"]["article"]>
+  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "thumbnail" | "createAt" | "accountId" | "articleCategoryId", ExtArgs["result"]["article"]>
   export type ArticleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Account?: boolean | AccountDefaultArgs<ExtArgs>
     ArticleCategory?: boolean | ArticleCategoryDefaultArgs<ExtArgs>
   }
   export type ArticleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Account?: boolean | AccountDefaultArgs<ExtArgs>
     ArticleCategory?: boolean | ArticleCategoryDefaultArgs<ExtArgs>
   }
   export type ArticleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Account?: boolean | AccountDefaultArgs<ExtArgs>
     ArticleCategory?: boolean | ArticleCategoryDefaultArgs<ExtArgs>
   }
 
   export type $ArticlePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Article"
     objects: {
+      Account: Prisma.$AccountPayload<ExtArgs>
       ArticleCategory: Prisma.$ArticleCategoryPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -2379,6 +2518,8 @@ export namespace Prisma {
       title: string
       content: string
       thumbnail: string
+      createAt: Date
+      accountId: number
       articleCategoryId: number
     }, ExtArgs["result"]["article"]>
     composites: {}
@@ -2774,6 +2915,7 @@ export namespace Prisma {
    */
   export interface Prisma__ArticleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    Account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     ArticleCategory<T extends ArticleCategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ArticleCategoryDefaultArgs<ExtArgs>>): Prisma__ArticleCategoryClient<$Result.GetResult<Prisma.$ArticleCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2808,6 +2950,8 @@ export namespace Prisma {
     readonly title: FieldRef<"Article", 'String'>
     readonly content: FieldRef<"Article", 'String'>
     readonly thumbnail: FieldRef<"Article", 'String'>
+    readonly createAt: FieldRef<"Article", 'DateTime'>
+    readonly accountId: FieldRef<"Article", 'Int'>
     readonly articleCategoryId: FieldRef<"Article", 'Int'>
   }
     
@@ -4318,6 +4462,8 @@ export namespace Prisma {
     title: 'title',
     content: 'content',
     thumbnail: 'thumbnail',
+    createAt: 'createAt',
+    accountId: 'accountId',
     articleCategoryId: 'articleCategoryId'
   };
 
@@ -4396,6 +4542,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4421,6 +4581,7 @@ export namespace Prisma {
     email?: StringFilter<"Account"> | string
     password?: StringFilter<"Account"> | string
     role?: EnumRoleFilter<"Account"> | $Enums.Role
+    articles?: ArticleListRelationFilter
   }
 
   export type AccountOrderByWithRelationInput = {
@@ -4429,18 +4590,20 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     role?: SortOrder
+    articles?: ArticleOrderByRelationAggregateInput
   }
 
   export type AccountWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    email?: string
     AND?: AccountWhereInput | AccountWhereInput[]
     OR?: AccountWhereInput[]
     NOT?: AccountWhereInput | AccountWhereInput[]
     user_name?: StringFilter<"Account"> | string
-    email?: StringFilter<"Account"> | string
     password?: StringFilter<"Account"> | string
     role?: EnumRoleFilter<"Account"> | $Enums.Role
-  }, "id">
+    articles?: ArticleListRelationFilter
+  }, "id" | "email">
 
   export type AccountOrderByWithAggregationInput = {
     id?: SortOrder
@@ -4474,7 +4637,10 @@ export namespace Prisma {
     title?: StringFilter<"Article"> | string
     content?: StringFilter<"Article"> | string
     thumbnail?: StringFilter<"Article"> | string
+    createAt?: DateTimeFilter<"Article"> | Date | string
+    accountId?: IntFilter<"Article"> | number
     articleCategoryId?: IntFilter<"Article"> | number
+    Account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     ArticleCategory?: XOR<ArticleCategoryScalarRelationFilter, ArticleCategoryWhereInput>
   }
 
@@ -4483,7 +4649,10 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     thumbnail?: SortOrder
+    createAt?: SortOrder
+    accountId?: SortOrder
     articleCategoryId?: SortOrder
+    Account?: AccountOrderByWithRelationInput
     ArticleCategory?: ArticleCategoryOrderByWithRelationInput
   }
 
@@ -4495,7 +4664,10 @@ export namespace Prisma {
     title?: StringFilter<"Article"> | string
     content?: StringFilter<"Article"> | string
     thumbnail?: StringFilter<"Article"> | string
+    createAt?: DateTimeFilter<"Article"> | Date | string
+    accountId?: IntFilter<"Article"> | number
     articleCategoryId?: IntFilter<"Article"> | number
+    Account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     ArticleCategory?: XOR<ArticleCategoryScalarRelationFilter, ArticleCategoryWhereInput>
   }, "id">
 
@@ -4504,6 +4676,8 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     thumbnail?: SortOrder
+    createAt?: SortOrder
+    accountId?: SortOrder
     articleCategoryId?: SortOrder
     _count?: ArticleCountOrderByAggregateInput
     _avg?: ArticleAvgOrderByAggregateInput
@@ -4520,6 +4694,8 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Article"> | string
     content?: StringWithAggregatesFilter<"Article"> | string
     thumbnail?: StringWithAggregatesFilter<"Article"> | string
+    createAt?: DateTimeWithAggregatesFilter<"Article"> | Date | string
+    accountId?: IntWithAggregatesFilter<"Article"> | number
     articleCategoryId?: IntWithAggregatesFilter<"Article"> | number
   }
 
@@ -4570,6 +4746,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: $Enums.Role
+    articles?: ArticleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateInput = {
@@ -4578,6 +4755,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: $Enums.Role
+    articles?: ArticleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUpdateInput = {
@@ -4585,6 +4763,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    articles?: ArticleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateInput = {
@@ -4593,6 +4772,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    articles?: ArticleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateManyInput = {
@@ -4622,6 +4802,8 @@ export namespace Prisma {
     title: string
     content: string
     thumbnail: string
+    createAt?: Date | string
+    Account: AccountCreateNestedOneWithoutArticlesInput
     ArticleCategory: ArticleCategoryCreateNestedOneWithoutArticleInput
   }
 
@@ -4630,6 +4812,8 @@ export namespace Prisma {
     title: string
     content: string
     thumbnail: string
+    createAt?: Date | string
+    accountId: number
     articleCategoryId: number
   }
 
@@ -4637,6 +4821,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Account?: AccountUpdateOneRequiredWithoutArticlesNestedInput
     ArticleCategory?: ArticleCategoryUpdateOneRequiredWithoutArticleNestedInput
   }
 
@@ -4645,6 +4831,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accountId?: IntFieldUpdateOperationsInput | number
     articleCategoryId?: IntFieldUpdateOperationsInput | number
   }
 
@@ -4653,6 +4841,8 @@ export namespace Prisma {
     title: string
     content: string
     thumbnail: string
+    createAt?: Date | string
+    accountId: number
     articleCategoryId: number
   }
 
@@ -4660,6 +4850,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ArticleUncheckedUpdateManyInput = {
@@ -4667,6 +4858,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accountId?: IntFieldUpdateOperationsInput | number
     articleCategoryId?: IntFieldUpdateOperationsInput | number
   }
 
@@ -4737,6 +4930,16 @@ export namespace Prisma {
     in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
     notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  }
+
+  export type ArticleListRelationFilter = {
+    every?: ArticleWhereInput
+    some?: ArticleWhereInput
+    none?: ArticleWhereInput
+  }
+
+  export type ArticleOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type AccountCountOrderByAggregateInput = {
@@ -4815,6 +5018,22 @@ export namespace Prisma {
     _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type AccountScalarRelationFilter = {
+    is?: AccountWhereInput
+    isNot?: AccountWhereInput
+  }
+
   export type ArticleCategoryScalarRelationFilter = {
     is?: ArticleCategoryWhereInput
     isNot?: ArticleCategoryWhereInput
@@ -4825,11 +5044,14 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     thumbnail?: SortOrder
+    createAt?: SortOrder
+    accountId?: SortOrder
     articleCategoryId?: SortOrder
   }
 
   export type ArticleAvgOrderByAggregateInput = {
     id?: SortOrder
+    accountId?: SortOrder
     articleCategoryId?: SortOrder
   }
 
@@ -4838,6 +5060,8 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     thumbnail?: SortOrder
+    createAt?: SortOrder
+    accountId?: SortOrder
     articleCategoryId?: SortOrder
   }
 
@@ -4846,22 +5070,29 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     thumbnail?: SortOrder
+    createAt?: SortOrder
+    accountId?: SortOrder
     articleCategoryId?: SortOrder
   }
 
   export type ArticleSumOrderByAggregateInput = {
     id?: SortOrder
+    accountId?: SortOrder
     articleCategoryId?: SortOrder
   }
 
-  export type ArticleListRelationFilter = {
-    every?: ArticleWhereInput
-    some?: ArticleWhereInput
-    none?: ArticleWhereInput
-  }
-
-  export type ArticleOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type ArticleCategoryCountOrderByAggregateInput = {
@@ -4887,12 +5118,40 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type ArticleCreateNestedManyWithoutAccountInput = {
+    create?: XOR<ArticleCreateWithoutAccountInput, ArticleUncheckedCreateWithoutAccountInput> | ArticleCreateWithoutAccountInput[] | ArticleUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: ArticleCreateOrConnectWithoutAccountInput | ArticleCreateOrConnectWithoutAccountInput[]
+    createMany?: ArticleCreateManyAccountInputEnvelope
+    connect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+  }
+
+  export type ArticleUncheckedCreateNestedManyWithoutAccountInput = {
+    create?: XOR<ArticleCreateWithoutAccountInput, ArticleUncheckedCreateWithoutAccountInput> | ArticleCreateWithoutAccountInput[] | ArticleUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: ArticleCreateOrConnectWithoutAccountInput | ArticleCreateOrConnectWithoutAccountInput[]
+    createMany?: ArticleCreateManyAccountInputEnvelope
+    connect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
   export type EnumRoleFieldUpdateOperationsInput = {
     set?: $Enums.Role
+  }
+
+  export type ArticleUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<ArticleCreateWithoutAccountInput, ArticleUncheckedCreateWithoutAccountInput> | ArticleCreateWithoutAccountInput[] | ArticleUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: ArticleCreateOrConnectWithoutAccountInput | ArticleCreateOrConnectWithoutAccountInput[]
+    upsert?: ArticleUpsertWithWhereUniqueWithoutAccountInput | ArticleUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: ArticleCreateManyAccountInputEnvelope
+    set?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    disconnect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    delete?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    connect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    update?: ArticleUpdateWithWhereUniqueWithoutAccountInput | ArticleUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: ArticleUpdateManyWithWhereWithoutAccountInput | ArticleUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -4903,10 +5162,42 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type ArticleUncheckedUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<ArticleCreateWithoutAccountInput, ArticleUncheckedCreateWithoutAccountInput> | ArticleCreateWithoutAccountInput[] | ArticleUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: ArticleCreateOrConnectWithoutAccountInput | ArticleCreateOrConnectWithoutAccountInput[]
+    upsert?: ArticleUpsertWithWhereUniqueWithoutAccountInput | ArticleUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: ArticleCreateManyAccountInputEnvelope
+    set?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    disconnect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    delete?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    connect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    update?: ArticleUpdateWithWhereUniqueWithoutAccountInput | ArticleUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: ArticleUpdateManyWithWhereWithoutAccountInput | ArticleUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
+  }
+
+  export type AccountCreateNestedOneWithoutArticlesInput = {
+    create?: XOR<AccountCreateWithoutArticlesInput, AccountUncheckedCreateWithoutArticlesInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutArticlesInput
+    connect?: AccountWhereUniqueInput
+  }
+
   export type ArticleCategoryCreateNestedOneWithoutArticleInput = {
     create?: XOR<ArticleCategoryCreateWithoutArticleInput, ArticleCategoryUncheckedCreateWithoutArticleInput>
     connectOrCreate?: ArticleCategoryCreateOrConnectWithoutArticleInput
     connect?: ArticleCategoryWhereUniqueInput
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type AccountUpdateOneRequiredWithoutArticlesNestedInput = {
+    create?: XOR<AccountCreateWithoutArticlesInput, AccountUncheckedCreateWithoutArticlesInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutArticlesInput
+    upsert?: AccountUpsertWithoutArticlesInput
+    connect?: AccountWhereUniqueInput
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutArticlesInput, AccountUpdateWithoutArticlesInput>, AccountUncheckedUpdateWithoutArticlesInput>
   }
 
   export type ArticleCategoryUpdateOneRequiredWithoutArticleNestedInput = {
@@ -5045,6 +5336,107 @@ export namespace Prisma {
     _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type ArticleCreateWithoutAccountInput = {
+    title: string
+    content: string
+    thumbnail: string
+    createAt?: Date | string
+    ArticleCategory: ArticleCategoryCreateNestedOneWithoutArticleInput
+  }
+
+  export type ArticleUncheckedCreateWithoutAccountInput = {
+    id?: number
+    title: string
+    content: string
+    thumbnail: string
+    createAt?: Date | string
+    articleCategoryId: number
+  }
+
+  export type ArticleCreateOrConnectWithoutAccountInput = {
+    where: ArticleWhereUniqueInput
+    create: XOR<ArticleCreateWithoutAccountInput, ArticleUncheckedCreateWithoutAccountInput>
+  }
+
+  export type ArticleCreateManyAccountInputEnvelope = {
+    data: ArticleCreateManyAccountInput | ArticleCreateManyAccountInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ArticleUpsertWithWhereUniqueWithoutAccountInput = {
+    where: ArticleWhereUniqueInput
+    update: XOR<ArticleUpdateWithoutAccountInput, ArticleUncheckedUpdateWithoutAccountInput>
+    create: XOR<ArticleCreateWithoutAccountInput, ArticleUncheckedCreateWithoutAccountInput>
+  }
+
+  export type ArticleUpdateWithWhereUniqueWithoutAccountInput = {
+    where: ArticleWhereUniqueInput
+    data: XOR<ArticleUpdateWithoutAccountInput, ArticleUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type ArticleUpdateManyWithWhereWithoutAccountInput = {
+    where: ArticleScalarWhereInput
+    data: XOR<ArticleUpdateManyMutationInput, ArticleUncheckedUpdateManyWithoutAccountInput>
+  }
+
+  export type ArticleScalarWhereInput = {
+    AND?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
+    OR?: ArticleScalarWhereInput[]
+    NOT?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
+    id?: IntFilter<"Article"> | number
+    title?: StringFilter<"Article"> | string
+    content?: StringFilter<"Article"> | string
+    thumbnail?: StringFilter<"Article"> | string
+    createAt?: DateTimeFilter<"Article"> | Date | string
+    accountId?: IntFilter<"Article"> | number
+    articleCategoryId?: IntFilter<"Article"> | number
+  }
+
+  export type AccountCreateWithoutArticlesInput = {
+    user_name: string
+    email: string
+    password: string
+    role?: $Enums.Role
+  }
+
+  export type AccountUncheckedCreateWithoutArticlesInput = {
+    id?: number
+    user_name: string
+    email: string
+    password: string
+    role?: $Enums.Role
+  }
+
+  export type AccountCreateOrConnectWithoutArticlesInput = {
+    where: AccountWhereUniqueInput
+    create: XOR<AccountCreateWithoutArticlesInput, AccountUncheckedCreateWithoutArticlesInput>
+  }
+
   export type ArticleCategoryCreateWithoutArticleInput = {
     category_name: string
   }
@@ -5057,6 +5449,32 @@ export namespace Prisma {
   export type ArticleCategoryCreateOrConnectWithoutArticleInput = {
     where: ArticleCategoryWhereUniqueInput
     create: XOR<ArticleCategoryCreateWithoutArticleInput, ArticleCategoryUncheckedCreateWithoutArticleInput>
+  }
+
+  export type AccountUpsertWithoutArticlesInput = {
+    update: XOR<AccountUpdateWithoutArticlesInput, AccountUncheckedUpdateWithoutArticlesInput>
+    create: XOR<AccountCreateWithoutArticlesInput, AccountUncheckedCreateWithoutArticlesInput>
+    where?: AccountWhereInput
+  }
+
+  export type AccountUpdateToOneWithWhereWithoutArticlesInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutArticlesInput, AccountUncheckedUpdateWithoutArticlesInput>
+  }
+
+  export type AccountUpdateWithoutArticlesInput = {
+    user_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  }
+
+  export type AccountUncheckedUpdateWithoutArticlesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
 
   export type ArticleCategoryUpsertWithoutArticleInput = {
@@ -5083,6 +5501,8 @@ export namespace Prisma {
     title: string
     content: string
     thumbnail: string
+    createAt?: Date | string
+    Account: AccountCreateNestedOneWithoutArticlesInput
   }
 
   export type ArticleUncheckedCreateWithoutArticleCategoryInput = {
@@ -5090,6 +5510,8 @@ export namespace Prisma {
     title: string
     content: string
     thumbnail: string
+    createAt?: Date | string
+    accountId: number
   }
 
   export type ArticleCreateOrConnectWithoutArticleCategoryInput = {
@@ -5118,15 +5540,39 @@ export namespace Prisma {
     data: XOR<ArticleUpdateManyMutationInput, ArticleUncheckedUpdateManyWithoutArticleCategoryInput>
   }
 
-  export type ArticleScalarWhereInput = {
-    AND?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
-    OR?: ArticleScalarWhereInput[]
-    NOT?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
-    id?: IntFilter<"Article"> | number
-    title?: StringFilter<"Article"> | string
-    content?: StringFilter<"Article"> | string
-    thumbnail?: StringFilter<"Article"> | string
-    articleCategoryId?: IntFilter<"Article"> | number
+  export type ArticleCreateManyAccountInput = {
+    id?: number
+    title: string
+    content: string
+    thumbnail: string
+    createAt?: Date | string
+    articleCategoryId: number
+  }
+
+  export type ArticleUpdateWithoutAccountInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    thumbnail?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ArticleCategory?: ArticleCategoryUpdateOneRequiredWithoutArticleNestedInput
+  }
+
+  export type ArticleUncheckedUpdateWithoutAccountInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    thumbnail?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    articleCategoryId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ArticleUncheckedUpdateManyWithoutAccountInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    thumbnail?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    articleCategoryId?: IntFieldUpdateOperationsInput | number
   }
 
   export type ArticleCreateManyArticleCategoryInput = {
@@ -5134,12 +5580,16 @@ export namespace Prisma {
     title: string
     content: string
     thumbnail: string
+    createAt?: Date | string
+    accountId: number
   }
 
   export type ArticleUpdateWithoutArticleCategoryInput = {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Account?: AccountUpdateOneRequiredWithoutArticlesNestedInput
   }
 
   export type ArticleUncheckedUpdateWithoutArticleCategoryInput = {
@@ -5147,6 +5597,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accountId?: IntFieldUpdateOperationsInput | number
   }
 
   export type ArticleUncheckedUpdateManyWithoutArticleCategoryInput = {
@@ -5154,6 +5606,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accountId?: IntFieldUpdateOperationsInput | number
   }
 
 

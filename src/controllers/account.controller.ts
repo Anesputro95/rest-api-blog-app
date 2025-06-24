@@ -1,10 +1,23 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { prisma } from "../config/prisma";
+import { hashPassword } from "../utils/hash";
+import { compare } from "bcrypt";
+import { sign } from "jsonwebtoken";
 
 
-export const createAccount = async (req: Request, res: Response) => {
+export const createAccount = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { user_name, email, password } = req.body;
+
+        const exitingUser = await prisma.account.findUnique({
+            where: {
+                email: req.body.email,
+            }
+        })
+
+        if (exitingUser) {
+            throw { rc: 400, success: false, message: "Account already exist" }
+        }
 
         if (!email.includes("@") || !email.includes(".")) {
             res.status(404).send({
@@ -17,7 +30,7 @@ export const createAccount = async (req: Request, res: Response) => {
             data: {
                 user_name,
                 email,
-                password,
+                password: await hashPassword(req.body.password),
             }
         });
         console.log("Hasil new Account", newAccount);
@@ -29,11 +42,7 @@ export const createAccount = async (req: Request, res: Response) => {
         });
 
     } catch (error) {
-        console.log(error);
-        res.status(500).send({
-            success: false,
-            message: "Gagal membuat Akun"
-        });
+        next(error);
     }
 };
 
@@ -47,7 +56,7 @@ export const updateAccount = async (req: Request, res: Response) => {
                 message: "Email tidak valid"
             })
         }
-        
+
         const account = await prisma.account.update({
             where: {
                 id: parseInt(req.params.id),
@@ -75,7 +84,7 @@ export const updateAccount = async (req: Request, res: Response) => {
     }
 };
 
-export const signIn = async (req: Request, res: Response) => {
+export const signIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, password } = req.body;
 
@@ -86,34 +95,37 @@ export const signIn = async (req: Request, res: Response) => {
             })
         }
 
-        const filterAccount = await prisma.account.findFirst({
-            where: { email, password }
+        const findUser = await prisma.account.findUnique({
+            where: { email }
         })
-        console.log(filterAccount);
 
-
-        if (!filterAccount) {
-            res.status(404).send({
-                success: false,
-                message: "Email dan Password salah"
-            })
+        if (!findUser) {
+            throw { rc: 404, message: "User not exist" };
         }
+
+        const comparePass = await compare(password, findUser.password);
+        if (!comparePass) {
+            throw { rc: 401, message: "Password is wrong" };
+        }
+
+        // membuat token
+        // kapan menggunakan token ()
+        const token = sign({ id: findUser.id, role: findUser.role },
+            process.env.TOKEN_KEY || "secret",
+            { expiresIn: "1h" }
+        );
 
         res.status(200).send({
             success: true,
             message: "Berhasil Login",
             data: {
-                id: true,
-                user_name: filterAccount?.user_name,
-                email: filterAccount?.email
+                user_name: findUser.user_name,
+                email: findUser.email,
+                role: findUser.role,
+                token,
             }
         })
-
     } catch (error) {
-        console.log(error);
-        res.status(500).send({
-            success: false,
-            message: "Gagal Sign In"
-        });
+        next(error)
     }
 }
